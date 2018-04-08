@@ -1,0 +1,53 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+p
+{
+		display: inline-block;
+		white-space: pre-line;
+		/*background: red;*/
+}
+p.delete
+{
+		float:right;
+}
+.Undone
+{
+		width:400px;
+		font-size: 20px;
+}
+.Done
+{
+	  width:400px;
+	  background: gray;
+	  text-decoration: line-through;
+	  font-size: 20px;
+}
+.TodoItem:hover
+{
+		background: skyblue
+}
+.TodoItem
+{
+		width:400px;
+}
+.display
+{
+		margin-right: 20px;
+}
+.TodoList
+{
+	background: ghostwhite;
+	width: 900px;
+	font-size: 30px;
+}
+
+.TodoApp
+{
+	background: wheat;
+	width: 900px;
+	font-size: 40px;
+}
