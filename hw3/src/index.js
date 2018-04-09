@@ -35,7 +35,9 @@ class TodoList extends Component {
 			name: props.name,
 			todoItems: [],
 			done: [],
-			displaychoice: "",
+            displaychoice: "",
+            doneNum: 0,
+            undoneNum: 0,
 		}
 		this.display = this.display.bind(this);
         this.click = this.click.bind(this);
@@ -46,18 +48,32 @@ class TodoList extends Component {
 		if(e.key !== 'Enter' || e.target.value == "")
 			return
 		this.setState({done: [...this.state.done, false]})
-		this.setState({todoItems: [...this.state.todoItems, e.target.value]});
+        this.setState({todoItems: [...this.state.todoItems, e.target.value]});
+        this.props.addU();
 		e.target.value="";
 	}
+
+    changeName(e){
+        if(e.key !== 'Enter' || e.target.value == "")
+            return
+        this.setState({name: e.target.value});
+        e.target.value="";
+    }
 
 	click(e){
 		let t = e.target;
 		if(t.className==='checkbox'){
             this.state.done[t.parentElement.id] = t.checked
             //this.setState({done[t.parentElement.id]: t.checked});
-			this.setState({done: this.state.done});
+            this.setState({done: this.state.done});
+            this.props.addD();
+            this.props.decU();
 		}
 		else if(t.className==='delete'){
+            if (this.state.done[t.parentElement.id])
+                this.props.decD();
+            else
+                this.props.decU();
 			this.state.todoItems.splice(t.parentElement.id, 1);
 			this.setState({todoItems: this.state.todoItems});
 			this.state.done.splice(t.parentElement.id, 1);
@@ -105,8 +121,9 @@ class TodoList extends Component {
 		return(
 			<div className = {this.props.className}>
 				<div className="TodoList" id = {this.props.id}>
-					<p className="content">{this.props.name} </p>
+					<p className="content">{this.state.name} </p>
                     <input type="text" onKeyPress={this.push.bind(this) } placeholder="Enter TodoItem name..."/>
+                    <input type="text" onKeyPress={this.changeName.bind(this)} placeholder="Change List name..."/>
                     <p className="deleteList" onClick={this.destroy_itself}>X</p>
                     <div onClick={this.click}> {this.addTodoItem()} </div>
                     <CountDisplay display_filter={this.display}/>
@@ -143,11 +160,15 @@ class TodoApp extends Component{
         super(props);
         this.state = {
             todoLists: [],
-            todoListsbox: [],
+            totalDone: 0,
+            totalUndone: 0,
         }
         this.click = this.click.bind(this);
-        this.countDone = this.countDone.bind(this);
-        this.countUndone = this.countUndone.bind(this);
+        this.count = this.count.bind(this);
+        this.addDone = this.addDone.bind(this);
+        this.minusDone = this.minusDone.bind(this);
+        this.addUndone = this.addUndone.bind(this);
+        this.minusUndone = this.minusUndone.bind(this);
     }
 
     render(){
@@ -156,9 +177,9 @@ class TodoApp extends Component{
                 <p className = "TodoContent"> React Todo-App </p>
                 <input type="text" onKeyPress={this.push.bind(this)} placeholder="Enter Your List Name" />
                 <img src={logo} className="App-logo" alt="logo" />
-                <p className ="TotalDone"> Total Done Items: {this.countDone()}</p>
-                <p className ="TotalUndone"> Total Undone Items: {this.countUndone()}</p>
-                
+                <p className ="TotalDone"> Total Done: {this.state.totalDone}</p>
+                <p className ="TotalUndone"> Total Undone: {this.state.totalUndone}</p>
+                <button type="button" className="countBtn" onClick={this.count}>Count All</button>
                 <div onClick={this.click}> {this.addTodoList()} </div>
                 
             </div>
@@ -180,36 +201,49 @@ class TodoApp extends Component{
 		}
     }
 
-    countDone(){
+    count(){
         var totalCount = 0;
-        for(let i = 0 ; i < this.state.todoLists.length ; ++i){
-            //let list = TodoApp.getElementById
-            //console.log(list);
+        for(let i = 0 ; i < this.state.todoLists.length; ++i){
             //TODO:
-        }
-        return(totalCount);
-    }
-
-    countUndone(){
-        var totalCount = 0;
-        for(let i = 0 ; i < this.state.todoLists.length ; ++i){
-            //TODO:
+            //var list = this.state.todoLists[i];
+            var list = document.getElementById(i);
+            console.log(list.count);
             
         }
-        return(totalCount);
+        this.setState({totalDone: totalCount});
+        this.setState({totalUndone: totalCount});
     }
 
     addTodoList(){
-        this.state.todoListsbox = [];
+        var todoListsbox = [];
 		for(let i = 0; i < this.state.todoLists.length ; ++i){
-            this.state.todoListsbox.push(<TodoList className="TodoList" name={this.state.todoLists[i]} id={ i }/>);
-		}
+            todoListsbox.push(<TodoList className="TodoList" name={this.state.todoLists[i]} key = {i} id={ i } addD = {this.addDone} addU = {this.addUndone} decD = {this.minusDone} decU = {this.minusUndone}/>);    
+        }
+        
 		return(
 			<div>
-				{this.state.todoListsbox}
+				{todoListsbox}
             </div>
         )
     }
+
+    addDone(){
+        var doneNum = this.state.totalDone + 1
+        this.setState({totalDone: doneNum});
+    }
+    minusDone(){
+        var doneNum = this.state.totalDone - 1
+        this.setState({totalDone: doneNum});
+    }
+    addUndone(){
+        var doneNum = this.state.totalUndone + 1
+        this.setState({totalUndone: doneNum});
+    }
+    minusUndone(){
+        var doneNum = this.state.totalUndone - 1
+        this.setState({totalUndone: doneNum});
+    }
+
 }
 
 ReactDOM.render(<TodoApp />, document.getElementById('root'));
