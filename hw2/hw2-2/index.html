@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name = "viewport" content = "width=device-width, initial-scale=1">
+        <style>
+            body{
+                margin: 0;
+                min-width: 250px;
+            }
+        </style> 
+        <link rel = "stylesheet" href="style.css">
+
+    </head>
+
+    <body>
+        <div id="header" class = "header">
+            <h2 style="margin:5px"> TODOs</h2>
+            <input type = "text" id = "itemInput" placeholder="Enter todo items...">
+            <input type = "text" class="time" id = "itemYear" placeholder="Year..">  
+            <input type = "text" class="time" id = "itemMonth" placeholder="Month.">
+            <input type = "text" class="time" id = "itemDay" placeholder="Day...">
+            <span onclick="newItem()" class="addBtn">Submit</span>
+            <span onclick="clearInput()" class="addBtn">ClearAll</span>         
+        </div>
+        <ul id = "list">
+        </ul>
+
+        <script src = "main.js"> </script>
+    </body>
+</html>

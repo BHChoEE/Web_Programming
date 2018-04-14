@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+    	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            body {
+            margin: 0;
+            min-width: 250px;
+            }
+		</style>
+		<link rel = "stylesheet" href = "main.css">
+		
+	</head>
+	
+    <body>
+
+		<div id="myDIV" class="header">
+			<h2 style="margin:5px">My To Do List</h2>
+			<input type="text" id="myInput" placeholder="Title...">
+			<span onclick="newList()" class="addBtn">Add</span>
+
+			<p id = "totalDone">total Done: 0</p>
+			<p id = "totalUndone">total Undone: 0</p>
+			<span onclick="render()" class= "renBtn">Render</span>
+		</div>
+		
+		
+
+		<script src = "main.js"></script>
+    </body>
+</html>

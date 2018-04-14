@@ -1,0 +1,25 @@
+body:after{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 10;
+    left: 10;
+    background-image: url(background.png);
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: center ;
+    width: 80%;
+    height: 80%;
+    opacity: 0.4;
+    z-index: -1;
+}
+
+#chosenPic {
+    height: 650px;
+    margin: auto;
+    display: block;
+}
+
+#fileSelector {
+    opacity: 0;
+}
