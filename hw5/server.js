@@ -5,7 +5,7 @@ var path = require("path")
 var bodyParser = require('body-parser');
 // Db announcement
 var mongoose = require('mongoose');
-const con = mongoose.createConnection('mongodb://localhost/postdb');
+const con = mongoose.createConnection('mongodb://localhost/b03901022_postdb');
 const UserSocket = require('./src/socket/UserSocket.js');
 const userSocket = new UserSocket(con);
 const PostSocket = require('./src/socket/PostSocket.js');
